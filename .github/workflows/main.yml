@@ -3,32 +3,32 @@ name: Build Android App
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push to the main branch
+      - main
   pull_request:
     branches:
-      - main  # Trigger the workflow on PRs to the main branch
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Runs on Ubuntu environment
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # This action checks out the repository
+        uses: actions/checkout@v2
 
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
-          java-version: '17'  # Specify the Java version for your project
+          java-version: '17'
 
       - name: Build APK
         run: |
-          chmod +x gradlew  # Make gradlew executable
-          ./gradlew assembleRelease  # Build the APK in release mode
+          chmod +x gradlew
+          ./gradlew assembleRelease
 
       - name: Upload APK
-        uses: actions/upload-artifact@v2  # Uploads the generated APK as an artifact
+        uses: actions/upload-artifact@v3  # ✅ Updated to v3
         with:
           name: app-release
-          path: app/build/outputs/apk/release/app-release.apk  # Path to the generated APK
+          path: app/build/outputs/apk/release/app-release.apk
