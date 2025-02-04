@@ -16,16 +16,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensures all files are checked out
+          fetch-depth: 0  # Ensure all files are checked out
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew  # ✅ Ensure gradlew is executable
 
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew  # ✅ Ensure gradlew is executable
 
       - name: Build APK
         run: ./gradlew assembleRelease  # ✅ Run Gradle build
