@@ -14,21 +14,24 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # ✅ Updated to v4
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures all files are checked out
 
       - name: Setup JDK
-        uses: actions/setup-java@v3  # ✅ Updated to v3
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew  # ✅ Ensure gradlew is executable
+
       - name: Build APK
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleRelease
+        run: ./gradlew assembleRelease  # ✅ Run Gradle build
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4  # ✅ Updated to v4
+        uses: actions/upload-artifact@v4
         with:
           name: app-release
           path: app/build/outputs/apk/release/app-release.apk
